@@ -4,18 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="quote_gen.css" />
   <title>Random Quote Generator</title>
 </head>
 <body>
-  <h1>My Random Quote Generator</h1>
-  <div id="quoteDisplay">
+  <div class="all-the-things">
+    <div class="center-everything">
+      <h1>My Random Quote Generator</h1>
+      <div class="quote-display" id="quoteDisplay">
 
+      </div>
+      <button class="new-quote" id="quote">Give Me A New Quote</button>
+
+      <button class="tweet-this" onclick= "tweet()" type="button" class="btn btn-primary">Tweet this!</button></a>
+    </div>
   </div>
-  <button onclick="showQuote()">Give Me A New Quote</button>
+    <script src="quote_gen.js"></script>
 
-  <button onclick= "tweet()" type="button" class="btn btn-primary">Tweet this!</button></a>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-  <script src="quote_gen.js"></script>
+
+    <script>
+
+    $(document).ready(function() {
+      $("#quote").on("click", function(){
+        $.getJSON("https://andruxnet-random-famous-quotes.p.mashape.com/", function(json) {
+          $(".quote-display").html(JSON.stringify(json));
+        });
+        console.log(json);
+      });
+    });
+
+
+    function tweet(){
+    var twtLink = 'http://twitter.com/home?status=' +encodeURIComponent(quote);
+    window.open(twtLink,'_blank');
+    };
+    </script>
 
 </body>
 </html>
