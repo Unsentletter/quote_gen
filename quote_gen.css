@@ -7,6 +7,7 @@
 h1 {
   padding: 10px;
   padding-top: 60px;
+  font-family: sans-serif;
 }
 
 .all-the-things {
@@ -29,9 +30,13 @@ h1 {
   box-shadow: 6px 6px 10px 12px #477187;
 }
 
-.quote-display {
+.quote-display,
+.author-display {
   height: 50px;
-  margin: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: sans-serif;
 }
 
 button {

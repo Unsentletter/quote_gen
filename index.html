@@ -11,36 +11,59 @@
   <div class="all-the-things">
     <div class="center-everything">
       <h1>My Random Quote Generator</h1>
-      <div class="quote-display" id="quoteDisplay">
-
-      </div>
-      <button class="new-quote" id="quote">Give Me A New Quote</button>
+      <div class="quote-display" id="quoteDisplay"></div>
+      <div class="author-display" id="authorDisplay"></div>
+      <button class="new-quote" id="newQuote">Give Me A New Quote</button>
 
       <button class="tweet-this" onclick= "tweet()" type="button" class="btn btn-primary">Tweet this!</button></a>
     </div>
   </div>
-    <script src="quote_gen.js"></script>
+    <!-- <script src="quote_gen.js"></script> -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 
-    <script>
+  <script>
 
-    $(document).ready(function() {
-      $("#quote").on("click", function(){
-        $.getJSON("https://andruxnet-random-famous-quotes.p.mashape.com/", function(json) {
-          $(".quote-display").html(JSON.stringify(json));
-        });
-        console.log(json);
-      });
+
+  $(document).ready(function() {
+  var theQuote = '';
+  var theAuthor = '';
+  createQuote();
+
+  $('#newQuote').on("click", function() {
+    createQuote();
+  });
+
+  $('.tweet-this').on("click", function() {
+    var myUrl = 'https://twitter.com/intent/tweet?text=' + theQuote + ' ' + theAuthor;
+    window.open(myUrl, 'twitter');
+    return false;
+  });
+
+  function createQuote() {
+    var output = $.ajax({
+      url: 'https://andruxnet-random-famous-quotes.p.mashape.com/cat=famous',
+      type: 'GET',
+      data: {}, // Additional parameters here
+      dataType: 'json',
+      success: function(data) {
+        theQuote = data.quote;
+        theAuthor = data.author;
+        document.getElementById('quoteDisplay').innerHTML = theQuote;
+        document.getElementById('authorDisplay').innerHTML = theAuthor;
+      },
+      error: function(err) {
+        console.log(err)
+      },
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-Mashape-Authorization", "Q7GhmYKUgLmshG7FHCWgP9HhLU9dp1DzbYSjsnTOX98RZAAj1x");
+      }
     });
+  }
+});
 
-
-    function tweet(){
-    var twtLink = 'http://twitter.com/home?status=' +encodeURIComponent(quote);
-    window.open(twtLink,'_blank');
-    };
-    </script>
+  </script>
 
 </body>
 </html>
